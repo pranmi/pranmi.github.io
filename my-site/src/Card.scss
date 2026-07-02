@@ -1,0 +1,54 @@
+.card {
+  background: white;
+  border-radius: 2rem;
+  box-shadow: 0 0 10rem -5rem;
+  overflow: hidden;
+  position: relative;
+}
+
+.card__img {
+  position: relative;
+  height: 300px;
+  width: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card__img img {
+  width: 120px;
+  position: relative;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.card__grid-effect {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(10, 1fr);
+  z-index: 0;
+}
+
+.card__grid-effect-tile::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  height: 4px;
+  width: 4px;
+  border-radius: 50%;
+  background: #A9C9FF;
+
+  transition: 500ms linear all;
+  box-shadow: 0 0 0;
+}
+
+.card__grid-effect-tile:hover::before {
+  height: 30px;
+  width: 30px;
+  transition: 70ms linear all;
+}

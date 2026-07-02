@@ -1,0 +1,13 @@
+:root {
+  --bg-color: #ffffff;
+  --text-color: #111827;
+  --card-color: #f3f4f6;
+  --accent-color: #2563eb;
+}
+
+[data-theme="dark"] {
+  --bg-color: #0f172a;
+  --text-color: #f8fafc;
+  --card-color: #1e293b;
+  --accent-color: #38bdf8;
+}

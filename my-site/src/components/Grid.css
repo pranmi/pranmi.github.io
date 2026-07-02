@@ -1,0 +1,35 @@
+.grid {
+  position: fixed;
+  inset: 0;
+
+  display: grid;
+  grid-template-columns: repeat(20, 1fr);
+  grid-template-rows: repeat(20, 1fr);
+
+  background: radial-gradient(circle at center, #05070d, #02040a);
+  z-index: 0;
+
+  pointer-events: none;
+}
+
+.node {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: hsla(184, 100%, 50%, 0.13);
+  transition: transform 0.08s ease-out;
+  will-change: transform, opacity;
+}
+
+.node::after {
+  content: "";
+  position: absolute;
+
+  width: 6px;
+  height: 6px;
+
+  border-radius: 50%;
+  background: #00eeffa1;
+
+  opacity: 0;
+}
