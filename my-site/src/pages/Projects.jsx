@@ -1,4 +1,5 @@
 import { useState } from "react";
+import ProjectScroller from "../components/ProjectScroller";
 
 const projects = [
   {
@@ -29,38 +30,47 @@ const projects = [
 ];
 
 function ProjectCard({ project }) {
-  const [index, setIndex] = useState(0);
+  const hasImages = project.images?.length > 0;
 
-  const hasImages = project.images && project.images.length > 0;
+const nextImage = () => {
+  if (!hasImages) return;
+  setIndex((prev) => (prev + 1) % project.images.length);
+};
 
-  const nextImage = () => {
-    setIndex((prev) => (prev + 1) % project.images.length);
-  };
-
-  const prevImage = () => {
-    setIndex(
-      (prev) =>
-        (prev - 1 + project.images.length) % project.images.length
-    );
-  };
+const prevImage = () => {
+  if (!hasImages) return;
+  setIndex((prev) => (prev - 1 + project.images.length) % project.images.length);
+};
 
   return (
-    <div className="project-card">
+    <div className="project-card-glass">
       <h2>{project.title}</h2>
 
-      <p>{project.description}</p>
+      <p className="project-desc">{project.description}</p>
 
       {hasImages && (
-        <div className="carousel">
-          <img
-            src={project.images[index]}
-            alt={project.title}
-            className="project-image"
-          />
+        <div className="media-viewer">
+          <div className="image-frame">
+            <img
+              src={project.images[index]}
+              alt={project.title}
+              className="project-image"
+            />
+          </div>
 
           <div className="carousel-controls">
             <button onClick={prevImage}>◀</button>
             <button onClick={nextImage}>▶</button>
+          </div>
+
+          <div className="image-dots">
+            {project.images.map((_, i) => (
+              <span
+                key={i}
+                className={i === index ? "dot active" : "dot"}
+                onClick={() => setIndex(i)}
+              />
+            ))}
           </div>
         </div>
       )}

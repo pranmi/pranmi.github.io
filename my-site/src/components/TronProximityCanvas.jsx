@@ -1,3 +1,6 @@
+//This component creates a canvas with a grid of dots that react to the user's mouse position.
+//The dots glow and scale based on their proximity to the curson.
+//For mobile devices, this is replaces with a sin based wave animation.
 import { useEffect, useRef } from "react";
 
 const GRID = 60; // density of dots
@@ -7,6 +10,8 @@ export default function TronProximityCanvas() {
   const mouse = useRef({ x: -1000, y: -1000 });
 
   useEffect(() => {
+    const isMobile =
+    window.matchMedia("(pointer: coarse)").matches;
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
 
@@ -42,10 +47,28 @@ export default function TronProximityCanvas() {
           const dx = px - mouse.current.x;
           const dy = py - mouse.current.y;
 
-          const dist = Math.sqrt(dx * dx + dy * dy);
+          let influence;
 
-          // influence radius (tweak this)
-          const influence = Math.max(0, 1 - dist / 250);
+          if (isMobile) {
+            // Wave animation for mobile devices
+            const t = performance.now() * 0.15;
+
+            const wave =
+              ((px + py) - t * 400) * 0.035;
+
+            influence = Math.pow(
+              Math.max(0, Math.cos(wave)),
+              4
+            );
+          } else {
+            // Existing mouse interaction
+            const dx = px - mouse.current.x;
+            const dy = py - mouse.current.y;
+
+            const dist = Math.sqrt(dx * dx + dy * dy);
+
+            influence = Math.max(0, 1 - dist / 250);
+          }
 
           const scale = 0.8 + influence * 5;
           const alpha = 0.15 + influence * 0.85;
